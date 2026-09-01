@@ -6,13 +6,15 @@ menuButton.addEventListener('click',()=>{const open=!header.classList.contains('
 mobileMenu.querySelectorAll('a').forEach(link=>link.addEventListener('click',closeMenu));
 window.addEventListener('scroll',()=>header.classList.toggle('scrolled',window.scrollY>20),{passive:true});
 document.querySelector('[data-year]').textContent=new Date().getFullYear();
+const GOOGLE_REVIEW_COUNT=24;
+document.querySelectorAll('[data-google-review-count]').forEach(item=>item.textContent=GOOGLE_REVIEW_COUNT);
 
 const serviceSelect=document.querySelector('[data-service-select]');
 document.querySelectorAll('[data-service]').forEach(link=>link.addEventListener('click',()=>{const option=[...serviceSelect.options].find(item=>item.value===link.dataset.service||item.text===link.dataset.service);if(option)serviceSelect.value=option.value}));
 
 const filterButtons=document.querySelectorAll('[data-filter]');
 const galleryItems=document.querySelectorAll('.gallery-item');
-filterButtons.forEach(button=>button.addEventListener('click',()=>{filterButtons.forEach(item=>item.classList.remove('active'));button.classList.add('active');galleryItems.forEach(item=>item.hidden=button.dataset.filter!=='all'&&item.dataset.category!==button.dataset.filter)}));
+filterButtons.forEach(button=>button.addEventListener('click',()=>{filterButtons.forEach(item=>item.classList.remove('active'));button.classList.add('active');galleryItems.forEach(item=>item.hidden=button.dataset.filter!=='all'&&!item.dataset.category.split(' ').includes(button.dataset.filter))}));
 
 const lightbox=document.querySelector('[data-lightbox]');
 const lightboxImage=lightbox.querySelector('img');
